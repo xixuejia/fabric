@@ -47,7 +47,7 @@
 BASE_VERSION = 1.4.2
 PREV_VERSION = 1.4.1
 CHAINTOOL_RELEASE=1.1.3
-BASEIMAGE_RELEASE=0.4.15
+BASEIMAGE_RELEASE=0.4.15-go-wakeup
 
 # Allow to build as a submodule setting the main project to
 # the PROJECT_NAME env variable, for example,
