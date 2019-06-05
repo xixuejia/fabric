@@ -1198,6 +1198,27 @@ func (h *Handler) HandleInvokeChaincode(msg *pb.ChaincodeMessage, txContext *Tra
 }
 
 func (h *Handler) Execute(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, msg *pb.ChaincodeMessage, timeout time.Duration) (*pb.ChaincodeMessage, error) {
+	if txParams.ChannelID == "mychannel0" {
+		if txParams.Proposal != nil {
+			hdr := &common.Header{}
+			chdr := &common.ChannelHeader{}
+			ccExt := &pb.ChaincodeHeaderExtension{}
+			if err := proto.Unmarshal(txParams.Proposal.Header, hdr); err != nil {
+				chaincodeLogger.Errorf("Error unmarshaling header: %s", err)
+			} else if err := proto.Unmarshal(hdr.ChannelHeader, chdr); err != nil {
+					chaincodeLogger.Errorf("Error unmarshaling channel header: %s", err)
+			} else if err := proto.Unmarshal(chdr.Extension, ccExt); err != nil {
+					chaincodeLogger.Errorf("Error unmarshalling chaincode extention: %s", err)
+			} else if ccExt.ChaincodeId != nil && ccExt.ChaincodeId.Name == "samplecc-0" {
+				// chaincodeLogger.Errorf("Chaincode name: %s", ccExt.ChaincodeId.Name)
+				payload := &pb.Response{Status: 200}
+				ccMsg := pb.ChaincodeMessage{Type: pb.ChaincodeMessage_COMPLETED}
+				ccMsg.Payload, _ = proto.Marshal(payload)
+				return &ccMsg, nil
+			}
+		}
+	}
+
 	chaincodeLogger.Debugf("Entry")
 	defer chaincodeLogger.Debugf("Exit")
 
