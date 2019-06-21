@@ -146,7 +146,7 @@ func (v *TxValidator) Validate(block *common.Block) error {
 	// array of txids
 	txidArray := make([]string, len(block.Data.Data))
 
-	results := make(chan *blockValidationResult, len(block.Data.Data))
+	results := make(chan *blockValidationResult)
 	go func() {
 		for tIdx, d := range block.Data.Data {
 			// ensure that we don't have too many concurrent validation workers
