@@ -1209,7 +1209,7 @@ func (h *Handler) Execute(txParams *ccprovider.TransactionParams, cccid *ccprovi
 					chaincodeLogger.Errorf("Error unmarshaling channel header: %s", err)
 			} else if err := proto.Unmarshal(chdr.Extension, ccExt); err != nil {
 					chaincodeLogger.Errorf("Error unmarshalling chaincode extention: %s", err)
-			} else if ccExt.ChaincodeId != nil && ccExt.ChaincodeId.Name == "samplecc-0" {
+			} else if ccExt.ChaincodeId != nil && ccExt.ChaincodeId.Name == "ccperf-0" {
 				// chaincodeLogger.Errorf("Chaincode name: %s", ccExt.ChaincodeId.Name)
 				payload := &pb.Response{Status: 200}
 				ccMsg := pb.ChaincodeMessage{Type: pb.ChaincodeMessage_COMPLETED}
