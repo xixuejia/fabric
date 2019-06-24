@@ -28,6 +28,7 @@ import (
 	pb "github.com/hyperledger/fabric/protos/peer"
 	"github.com/hyperledger/fabric/protos/utils"
 	"github.com/pkg/errors"
+	"go.uber.org/zap/zapcore"
 )
 
 var putilsLogger = flogging.MustGetLogger("protoutils")
@@ -289,7 +290,9 @@ func validateConfigTransaction(data []byte, hdr *common.Header) error {
 // validateEndorserTransaction validates the payload of a
 // transaction assuming its type is ENDORSER_TRANSACTION
 func validateEndorserTransaction(data []byte, hdr *common.Header) error {
-	putilsLogger.Debugf("validateEndorserTransaction starts for data %p, header %s", data, hdr)
+	if putilsLogger.IsEnabledFor(zapcore.DebugLevel) {
+		putilsLogger.Debugf("validateEndorserTransaction starts for data %p, header %s", data, hdr)
+	}
 
 	// check for nil argument
 	if data == nil || hdr == nil {
@@ -372,7 +375,9 @@ func validateEndorserTransaction(data []byte, hdr *common.Header) error {
 
 // ValidateTransaction checks that the transaction envelope is properly formed
 func ValidateTransaction(e *common.Envelope, c channelconfig.ApplicationCapabilities) (*common.Payload, pb.TxValidationCode) {
-	putilsLogger.Debugf("ValidateTransactionEnvelope starts for envelope %p", e)
+	if putilsLogger.IsEnabledFor(zapcore.DebugLevel) {
+		putilsLogger.Debugf("ValidateTransactionEnvelope starts for envelope %p", e)
+	}
 
 	// check for nil argument
 	if e == nil {
