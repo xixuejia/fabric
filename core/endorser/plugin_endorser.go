@@ -17,6 +17,7 @@ import (
 	pb "github.com/hyperledger/fabric/protos/peer"
 	putils "github.com/hyperledger/fabric/protos/utils"
 	"github.com/pkg/errors"
+	"go.uber.org/zap"
 )
 
 //go:generate mockery -dir . -name TransientStoreRetriever -case underscore -output mocks/
@@ -160,7 +161,9 @@ type PluginEndorser struct {
 
 // EndorseWithPlugin endorses the response with a plugin
 func (pe *PluginEndorser) EndorseWithPlugin(ctx Context) (*pb.ProposalResponse, error) {
-	endorserLogger.Debug("Entering endorsement for", ctx)
+	if endorserLogger.IsEnabledFor(zap.DebugLevel) {
+		endorserLogger.Debug("Entering endorsement for", ctx)
+	}
 
 	if ctx.Response == nil {
 		return nil, errors.New("response is nil")
