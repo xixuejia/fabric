@@ -100,7 +100,7 @@ func GeneratePrivateKey(keystorePath string) (bccsp.Key,
 	csp, err := factory.GetBCCSPFromOpts(opts)
 	if err == nil {
 		// generate a key
-		priv, err = csp.KeyGen(&bccsp.ECDSAP256KeyGenOpts{Temporary: false})
+		priv, err = csp.KeyGen(&bccsp.ECDSAP384KeyGenOpts{Temporary: false})
 		if err == nil {
 			// create a crypto.Signer
 			s, err = signer.New(csp, priv)

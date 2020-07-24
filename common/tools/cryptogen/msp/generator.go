@@ -197,7 +197,7 @@ func GenerateVerifyingMSP(baseDir string, signCA *ca.CA, tlsCA *ca.CA, nodeOUs b
 
 	factory.InitFactories(nil)
 	bcsp := factory.GetDefault()
-	priv, err := bcsp.KeyGen(&bccsp.ECDSAP256KeyGenOpts{Temporary: true})
+	priv, err := bcsp.KeyGen(&bccsp.ECDSAP384KeyGenOpts{Temporary: true})
 	ecPubKey, err := csp.GetECPublicKey(priv)
 	if err != nil {
 		return err
